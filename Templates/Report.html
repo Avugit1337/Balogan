@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Logia Report</title>
+    <link href="Report.css" rel="stylesheet">
+</head>
+
+<body id="rB">
+    <div id="rEs">
+        <h1 id="rN">Report: N/A</h3>
+        <h3 id="rD">Description: N/A</h5>
+        <div >
+            <button id="btp" onclick="javascript:toggleTbl('rp', 'btp', true);">+ Properties</button>
+            <table id="rp" style="display: none;">
+                <tr><th colspan="2">Properties<button onclick="javascript:toggleTbl('rp', 'btp');">- Hide</button></th></tr>
+            </table>
+            <button id="btP" onclick="javascript:toggleTbl('rP', 'btP', true);">+ Parameters</button>
+            <table id="rP" style="display: none;">
+                <tr><th colspan="2">Parameters<button onclick="javascript:toggleTbl('rP', 'btP');">- Hide</button></th></tr>
+            </table>
+        </div>
+        <hr>
+        <button id="eA" onclick="javascript:toggleAllLevels(true);">+ Expand All</button>
+        <button id="eA" onclick="javascript:toggleAllLevels();">- Collapse All</button>
+    </div>
+    <script type="text/javascript" src="Report.js"></script>
+    <script type="text/javascript" src="ReportController.js"></script>
+    <script type="text/javascript">
+        (function () {
+            populateReport();
+        })();
+    </script>
+</body>
+
+</html>
