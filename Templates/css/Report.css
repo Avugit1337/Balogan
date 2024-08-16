@@ -1,0 +1,132 @@
+#rB {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ced0d6;
+    background-color: #2b2d30;
+}
+
+#rEs {
+    font-family: monospace, monospace;
+    background-color: #1e1f22;
+    border: 1px solid black;
+    padding: 4px;
+    border-style: outset;
+}
+
+#rEs div.olE{
+    margin: 4px;
+}
+
+#rP, #rp {
+    margin: 4px;
+    border: 1px solid #ced0d6;
+}
+
+.olE {
+    border: solid 1px #2b2d30;
+    transition: all 0.5s ease-out;
+}
+
+.olE:hover {
+    border: solid 1px #61656b;
+}
+
+.olE:not(:has(.olE:hover)):hover {
+    border: solid 1px rgb(0, 151, 189);
+}
+
+.olEH {
+    cursor: pointer;
+}
+
+.olEH:hover {
+    font-weight: bold;
+}
+
+.olEH.H:before {
+    content: '+ ';
+}
+
+.olEH:not(H):before {
+    content: '- ';
+}
+
+.cW {
+    color: #ced0d6;
+}
+
+.cY {
+    color: rgb(240, 204, 0);
+}
+
+.cO {
+    color: darkorange;
+}
+
+.cR {
+    color: rgb(199, 0, 0);
+}
+
+.bE {
+    font-weight: bold;
+}
+
+.wE {
+    font-weight: bold;
+}
+
+.fE {
+    font-weight: bold;
+}
+
+.EE {
+    font-weight: bold;
+}
+
+.hE {
+    font-weight: bold;
+}
+
+.iE {
+    font-weight: bold;
+}
+
+.ts {
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-right: 8px;
+    background-color: #292929;
+    border-right: 1px solid #53565c;
+}
+
+h1, h3 {
+    margin-left: 4px;
+}
+
+td {
+    border: 1px solid #ced0d6;
+    padding: 4px;
+}
+
+img {
+    width: 100px
+}
+
+th {
+    background-color: #b2b4bb;
+    color: #17171a;
+    cursor: default;
+}
+
+button {
+    transition-duration: 0.4s;
+    font-family: monospace, monospace;
+    margin: 4px;
+    background-color: #4f5257;
+    color: #ced0d6;
+}
+  
+button:hover {
+    background-color: #292929;
+    color: #ced0d6;
+    cursor: pointer;
+}

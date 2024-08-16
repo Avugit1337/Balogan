@@ -1,1 +1,4 @@
 *.pyc
+.idea/*
+Templates/Report.json
+Templates/Report.js
