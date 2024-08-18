@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Logia Report</title>
     <link href="css/Report.css" rel="stylesheet">
 </head>
-
 <body id="rB">
     <div id="rEs">
-        <h1 id="rN">Report: N/A</h3>
-        <h3 id="rD">Description: N/A</h5>
-        <div >
-            <button id="btp" onclick="javascript:toggleTbl('rp', 'btp', true);">+ Properties</button>
+        <h1 id="rN">Report: N/A</h1>
+        <h3 id="rD">Description: N/A</h3>
+        <div id="tbC" style="border: none; border-bottom: solid 1px #2b2d30;">
+            <button id="btp" style="margin-left: 0px; margin-right: 8px;" onclick="javascript:toggleTbl('rp', 'btp', true);">+ Properties</button>
             <table id="rp" style="display: none;">
-                <tr><th colspan="2">Properties<button onclick="javascript:toggleTbl('rp', 'btp');">- Hide</button></th></tr>
+                <tr><th style="float: left; width: 100%;" colspan="2">Properties<button onclick="javascript:toggleTbl('rp', 'btp');">- Hide</button></th><th>Value</th></tr>
             </table>
-            <button id="btP" onclick="javascript:toggleTbl('rP', 'btP', true);">+ Parameters</button>
+            <button id="btP" style="margin-left: 0px;" onclick="javascript:toggleTbl('rP', 'btP', true);">+ Parameters</button>
             <table id="rP" style="display: none;">
-                <tr><th colspan="2">Parameters<button onclick="javascript:toggleTbl('rP', 'btP');">- Hide</button></th></tr>
+                <tr><th style="float: left; width: 100%" colspan="2">Parameters<button onclick="javascript:toggleTbl('rP', 'btP');">- Hide</button></th><th>Value</th></tr>
             </table>
         </div>
-        <hr>
         <button id="eA" onclick="javascript:toggleAllLevels(true);">+ Expand All</button>
         <button id="eA" onclick="javascript:toggleAllLevels();">- Collapse All</button>
     </div>
@@ -33,5 +30,4 @@
         })();
     </script>
 </body>
-
 </html>

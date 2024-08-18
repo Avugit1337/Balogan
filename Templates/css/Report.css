@@ -1,6 +1,7 @@
 #rB {
     color: #ced0d6;
     background-color: #2b2d30;
+    margin: 0px;
 }
 
 #rEs {
@@ -9,20 +10,24 @@
     border: 1px solid black;
     padding: 4px;
     border-style: outset;
+    margin: 12px;
 }
 
 #rEs div.olE {
     margin: 4px;
 }
 
-#rEs > div:not(.olE) {
+#rEs>div:not(.olE) {
     margin-left: 4px;
     border: solid 1px #2b2d30;
 }
 
 #rP, #rp {
-    margin: 4px;
     border: 1px solid #ced0d6;
+    table-layout: fixed;
+    width: 100%;
+    word-wrap: break-word;
+    float: left;
 }
 
 .olE {
@@ -78,31 +83,7 @@
     color: #ce2828;
 }
 
-.bE {
-    font-weight: bold;
-}
-
-.wE {
-    font-weight: bold;
-}
-
-.sE {
-    font-weight: bold;
-}
-
-.fE {
-    font-weight: bold;
-}
-
-.EE {
-    font-weight: bold;
-}
-
-.hE {
-    font-weight: bold;
-}
-
-.iE {
+.bE,.wE,.sE,.fE,.EE {
     font-weight: bold;
 }
 
@@ -123,19 +104,45 @@ h1, h3 {
     margin-left: 4px;
 }
 
-td {
-    border: 1px solid #ced0d6;
-    padding: 4px;
+a:link {
+    color: rgb(134, 190, 192);
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: pink;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: rgb(0, 174, 255);
+    background-color: transparent;
+    text-decoration: underline;
 }
 
 img {
-    width: 100px
+    width: 100px;
+    height: 100px;
 }
 
 th {
     background-color: #b2b4bb;
     color: #17171a;
     cursor: default;
+}
+
+td {
+    border: 1px solid #ced0d6;
+    padding: 4px;
+    width: 30%;
 }
 
 button {
@@ -145,7 +152,7 @@ button {
     background-color: #4f5257;
     color: #ced0d6;
 }
-  
+
 button:hover {
     background-color: #292929;
     color: #ced0d6;

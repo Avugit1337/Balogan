@@ -108,7 +108,7 @@ class Report:
     def l_stop(self):
         self.elements.append(ReportElement(element_type=ReportElementType.LEVEL_STOP))
 
-    def link(self, replacement: str = "", link_addr: str = "", status: ReportStatus = ReportStatus.INFO) -> None:
+    def link(self, link_addr: str = "", replacement: str = "", status: ReportStatus = ReportStatus.INFO) -> None:
         self.elements.append(ReportElement(element_type=ReportElementType.LINK, status=status,
                                            data=f'{replacement}__{link_addr}'))
 
