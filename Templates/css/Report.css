@@ -1,5 +1,4 @@
 #rB {
-    font-family: Arial, Helvetica, sans-serif;
     color: #ced0d6;
     background-color: #2b2d30;
 }
@@ -12,8 +11,13 @@
     border-style: outset;
 }
 
-#rEs div.olE{
+#rEs div.olE {
     margin: 4px;
+}
+
+#rEs > div:not(.olE) {
+    margin-left: 4px;
+    border: solid 1px #2b2d30;
 }
 
 #rP, #rp {
@@ -31,7 +35,7 @@
 }
 
 .olE:not(:has(.olE:hover)):hover {
-    border: solid 1px rgb(0, 151, 189);
+    border: solid 1px #588cf5;
 }
 
 .olEH {
@@ -50,8 +54,16 @@
     content: '- ';
 }
 
+.olEH.cW {
+    color: #588cf5;
+}
+
 .cW {
     color: #ced0d6;
+}
+
+.cG {
+    color: #2b8126;
 }
 
 .cY {
@@ -63,7 +75,7 @@
 }
 
 .cR {
-    color: rgb(199, 0, 0);
+    color: #ce2828;
 }
 
 .bE {
@@ -71,6 +83,10 @@
 }
 
 .wE {
+    font-weight: bold;
+}
+
+.sE {
     font-weight: bold;
 }
 
@@ -96,6 +112,11 @@
     margin-right: 8px;
     background-color: #292929;
     border-right: 1px solid #53565c;
+}
+
+.ds {
+    display: inline-block;
+    white-space: pre-wrap;
 }
 
 h1, h3 {

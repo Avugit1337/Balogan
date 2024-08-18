@@ -1,3 +1,4 @@
+import atexit
 import json
 import time
 from enum import IntEnum
@@ -8,20 +9,21 @@ from LogModel.Misc import ReportStatus, ReportType, obj_list_to_dict_list, SaveA
 
 class ReportElementType(IntEnum):
     REGULAR = 0
-    BOLD = 1
-    LINK = 2
-    IMG = 3
-    WARNING = 4
-    FAILURE = 5
-    ERROR = 6
-    LEVEL_START = 7
-    LEVEL_STOP = 8
-    HTML = 9
+    SUCCESS = 1
+    BOLD = 2
+    LINK = 3
+    IMG = 4
+    WARNING = 5
+    FAILURE = 6
+    ERROR = 7
+    LEVEL_START = 8
+    LEVEL_STOP = 9
+    HTML = 10
 
 
 class ReportElement:
     def __init__(self, element_type: ReportElementType = ReportElementType.REGULAR,
-                 status: ReportStatus = ReportStatus.SUCCESS, data: str = None):
+                 status: ReportStatus = ReportStatus.INFO, data: str = None):
         self.epoch: int = int(time.time())
         self.element_type = element_type
         self.status = status
@@ -47,10 +49,10 @@ class Report:
         self.description = description
         self.properties = properties
         self.parameters = parameters
-        self.status: ReportStatus = ReportStatus.SUCCESS
         self.elements: List[ReportElement] = []
         self.start_epoch: int = int(time.time())
         self.uid: str = str(Report.uid_idx) + "_" + str(self.start_epoch)
+        atexit.register(self.save_to_file, save_as=SaveAs.JS, file_abs='Templates/Report.js')
         Report.uid_idx += 1
 
     def __str__(self):
@@ -59,12 +61,10 @@ class Report:
             'n': self.name,
             'u': self.uid,
             'S': self.start_epoch,
-            's': self.status.value,
             'D': self.description,
             'p': self.properties,
             'P': self.parameters,
-            'E': obj_list_to_dict_list(self.elements),
-            'e': self.start_epoch if not self.elements else self.elements[-1].epoch
+            'E': obj_list_to_dict_list(self.elements)
         })
 
     def save_to_file(self, save_as: SaveAs = SaveAs.JSON, file_abs: str = None) -> None:
@@ -77,11 +77,18 @@ class Report:
         except Exception as e:
             print(f'Failed saving to "{file_abs}": {str(e)}')
 
+    def log(self, msg: str = "", status: ReportStatus = ReportStatus.INFO) -> None:
+        self.elements.append(ReportElement(data=msg, status=status))
+
     def info(self, msg: str = "") -> None:
         self.elements.append(ReportElement(data=msg))
 
     def bold(self, msg: str = "") -> None:
         self.elements.append(ReportElement(element_type=ReportElementType.BOLD, data=msg))
+
+    def success(self, msg: str = "") -> None:
+        self.elements.append(ReportElement(element_type=ReportElementType.SUCCESS,
+                                           status=ReportStatus.SUCCESS, data=msg))
 
     def warn(self, msg: str = "") -> None:
         self.elements.append(ReportElement(element_type=ReportElementType.WARNING,
@@ -95,19 +102,19 @@ class Report:
         self.elements.append(ReportElement(element_type=ReportElementType.ERROR,
                                            status=ReportStatus.ERROR, data=msg))
 
-    def l_start(self, msg: str = "", status: ReportStatus = ReportStatus.SUCCESS) -> None:
+    def l_start(self, msg: str = "", status: ReportStatus = ReportStatus.INFO) -> None:
         self.elements.append(ReportElement(element_type=ReportElementType.LEVEL_START, status=status, data=msg))
 
     def l_stop(self):
         self.elements.append(ReportElement(element_type=ReportElementType.LEVEL_STOP))
 
-    def link(self, replacement: str = "", link_addr: str = "", status: ReportStatus = ReportStatus.SUCCESS) -> None:
+    def link(self, replacement: str = "", link_addr: str = "", status: ReportStatus = ReportStatus.INFO) -> None:
         self.elements.append(ReportElement(element_type=ReportElementType.LINK, status=status,
                                            data=f'{replacement}__{link_addr}'))
 
-    def img(self, img_path: str = "", alt: str = "Image", status: ReportStatus = ReportStatus.SUCCESS):
+    def img(self, img_path: str = "", alt: str = "Image", status: ReportStatus = ReportStatus.INFO):
         self.elements.append(ReportElement(element_type=ReportElementType.IMG, status=status,
                                            data=f'{img_path}__{alt}'))
 
-    def html(self, html_code: str = "", status: ReportStatus = ReportStatus.SUCCESS) -> None:
+    def html(self, html_code: str = "", status: ReportStatus = ReportStatus.INFO) -> None:
         self.elements.append(ReportElement(element_type=ReportElementType.HTML, status=status, data=html_code))

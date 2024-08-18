@@ -10,10 +10,11 @@ class ReportType(IntEnum):
 
 
 class ReportStatus(IntEnum):
-    SUCCESS = 0
-    WARNING = 1
-    FAILURE = 2
-    ERROR = 3
+    INFO = 0
+    SUCCESS = 1
+    WARNING = 2
+    FAILURE = 3
+    ERROR = 4
 
 
 class SaveAs(Enum):

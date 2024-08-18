@@ -6,18 +6,20 @@ function getn(s, t) { return s.getElementsByTagName(t); }
 function ac(e, c) { e.appendChild(c); }
 
 const TYPE_REGULAR = 0;
-const TYPE_BOLD = 1;
-const TYPE_LINK = 2;
-const TYPE_IMG = 3;
-const TYPE_WARNING = 4;
-const TYPE_FAILURE = 5;
-const TYPE_ERROR = 6;
-const TYPE_LEVEL_START = 7;
-const TYPE_LEVEL_STOP = 8;
-const TYPE_HTML = 9;
+const TYPE_SUCCESS = 1;
+const TYPE_BOLD = 2;
+const TYPE_LINK = 3;
+const TYPE_IMG = 4;
+const TYPE_WARNING = 5;
+const TYPE_FAILURE = 6;
+const TYPE_ERROR = 7;
+const TYPE_LEVEL_START = 8;
+const TYPE_LEVEL_STOP = 9;
+const TYPE_HTML = 10;
 
 const TYPE_CLASSES = {
     [TYPE_REGULAR]: 'rE',
+    [TYPE_SUCCESS]: 'sE',
     [TYPE_BOLD]: 'bE',
     [TYPE_LINK]: 'lE',
     [TYPE_IMG]: 'iE',
@@ -30,19 +32,22 @@ const TYPE_CLASSES = {
 };
 const LVL_H_C = 'olEH';
 
-const STATUS_SUCCESS = 0;
-const STATUS_WARNING = 1;
-const STATUS_FAILURE = 2;
-const STATUS_ERROR = 3;
+const STATUS_INFO = 0;
+const STATUS_SUCCESS = 1;
+const STATUS_WARNING = 2;
+const STATUS_FAILURE = 3;
+const STATUS_ERROR = 4;
 
 const STATUS_CLASSES = {
-    [STATUS_SUCCESS]: 'cW',
+    [STATUS_INFO]: 'cW',
+    [STATUS_SUCCESS]: 'cG',
     [STATUS_WARNING]: 'cY',
     [STATUS_FAILURE]: 'cO',
     [STATUS_ERROR]: 'cR'
 };
 
 const CLASSES_STATUS = {
+    [STATUS_CLASSES[STATUS_INFO]]: STATUS_INFO,
     [STATUS_CLASSES[STATUS_SUCCESS]]: STATUS_SUCCESS,
     [STATUS_CLASSES[STATUS_WARNING]]: STATUS_WARNING,
     [STATUS_CLASSES[STATUS_FAILURE]]: STATUS_FAILURE,
@@ -118,6 +123,7 @@ function eCont(data, h = false) {
     } else {
         content = dce('span');
         content.innerText = data;
+        content.className = "ds"
     }
     if (depth > 0)
         content.style.marginLeft = depth + 'px';
@@ -125,7 +131,7 @@ function eCont(data, h = false) {
 }
 
 function statusColor(s) {
-    if (s == STATUS_SUCCESS) return;
+    if (s == STATUS_INFO) return;
     let sl = lvls.length;
     if (sl == 0) return;
     let c = STATUS_CLASSES[s];
@@ -191,16 +197,30 @@ function stopLevel() {
 }
 
 function setRElements(rE) {
-    for (let i = 0; i < rE.length; i++) {
+    let eMnt = rE.length;
+    for (let i = 0; i < eMnt; i++) {
+        console.log("Element: ");
+        console.log(rE[i]);
         switch (rE[i].t) {
             case TYPE_REGULAR: regular(rE[i]); break;
+            case TYPE_SUCCESS: regular(rE[i]); break;
             case TYPE_BOLD: regular(rE[i]); break;
             case TYPE_LINK: link(rE[i]); break;
             case TYPE_IMG: image(rE[i]); break;
             case TYPE_WARNING: regular(rE[i]); break;
             case TYPE_FAILURE: regular(rE[i]); break;
             case TYPE_ERROR: regular(rE[i]); break;
-            case TYPE_LEVEL_START: startLevel(rE[i]); break;
+            case TYPE_LEVEL_START: {
+                let n = i + 1;
+                if (n < eMnt && rE[n].t != TYPE_LEVEL_STOP) {
+                    startLevel(rE[i]);
+                } else {
+                    rE[i].d += ' (empty)';
+                    regular(rE[i]);
+                    i = n;
+                }
+                break;
+            }
             case TYPE_LEVEL_STOP: stopLevel(); break;
             case TYPE_HTML: regular(rE[i], true); break;
             default: break;
@@ -229,7 +249,7 @@ function sMh(es, mh) {
     }
 }
 
-function toggleSlide(el, show=false) {
+function toggleSlide(el, show = false) {
     const dmh = el.getAttribute('data-max-height');
     const es = el.style;
     if (!dmh) {
@@ -238,13 +258,13 @@ function toggleSlide(el, show=false) {
         es.overflowY = 'hidden';
         es.maxHeight = 0;
         el.setAttribute('data-max-height', emh);
-        es.display = 'block';
+        es.display = el.classList.contains('olE') ? 'block' : 'flex';
         sMh(es, 0);
     } else
         sMh(es, show ? dmh : 0);
 }
 
-function toggleTbl(ti, bi, show=false) {
+function toggleTbl(ti, bi, show = false) {
     const tes = dgei(ti).style;
     const ies = dgei(bi).style;
     if (show) {
@@ -256,7 +276,7 @@ function toggleTbl(ti, bi, show=false) {
     }
 }
 
-function toggleLevel(children, show=false, toggle=false) {
+function toggleLevel(children, show = false, toggle = false) {
     const cl = children[1].classList;
     const hidden = cl.contains('H');
     if (toggle) {
@@ -273,7 +293,7 @@ function toggleLevel(children, show=false, toggle=false) {
     }
 }
 
-function toggleAllLevels(show=false) {
+function toggleAllLevels(show = false) {
     for (let i = 0; i < lvlsE.length; i++)
         toggleLevel(lvlsE[i].childNodes, show);
 }
@@ -288,6 +308,8 @@ function populateReport() {
     setTbl(dgei('rP'), report.P);
     dgei('rN').innerText = "Report: " + report.n;
     dgei('rD').innerText = "Description: " + report.D;
+    console.log("Report:")
+    console.log(report)
     setRElements(report.E);
     setLevelsClick();
     toggleAllLevels();
