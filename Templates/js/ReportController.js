@@ -199,8 +199,6 @@ function stopLevel() {
 function setRElements(rE) {
     let eMnt = rE.length;
     for (let i = 0; i < eMnt; i++) {
-        console.log("Element: ");
-        console.log(rE[i]);
         switch (rE[i].t) {
             case TYPE_REGULAR: regular(rE[i]); break;
             case TYPE_SUCCESS: regular(rE[i]); break;
@@ -308,8 +306,8 @@ function populateReport() {
     setTbl(dgei('rP'), report.P);
     dgei('rN').innerText = "Report: " + report.n;
     dgei('rD').innerText = "Description: " + report.D;
-    console.log("Report:")
-    console.log(report)
+    dgei('stV').innerText = new Date(report.S * 1000).toLocaleString();
+    dgei('enV').innerText = new Date(report.E[report.E.length - 1].e * 1000).toLocaleString();
     setRElements(report.E);
     setLevelsClick();
     toggleAllLevels();

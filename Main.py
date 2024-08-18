@@ -1,3 +1,5 @@
+import time
+
 from LogModel.Report import Report
 
 if __name__ in '__main__':
@@ -75,6 +77,8 @@ if __name__ in '__main__':
         report.info("Info message")
     finally:
         report.l_stop()
+
+    time.sleep(1)
 
     report.l_start("Message Indentation")
     try:
