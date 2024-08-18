@@ -19,7 +19,7 @@
 
 #rEs>div:not(.olE) {
     margin-left: 4px;
-    border: solid 1px #2b2d30;
+    border: solid 1px #1e1f22;
 }
 
 #rP, #rp {
@@ -31,7 +31,7 @@
 }
 
 .olE {
-    border: solid 1px #2b2d30;
+    border: solid 1px #1e1f22;
     transition: all 0.5s ease-out;
 }
 
