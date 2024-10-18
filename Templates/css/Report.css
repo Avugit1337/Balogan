@@ -1,0 +1,120 @@
+#reportBody {
+    color: #ced0d6;
+    background-color: #2b2d30;
+    margin: 0px;
+}
+
+#reportContainer {
+    font-family: monospace, monospace;
+    background-color: #1e1f22;
+    border: 1px solid black;
+    padding: 4px;
+    border-style: outset;
+    margin: 12px;
+}
+
+#reportContainer div.L {margin: 4px;}
+#reportContainer>div:not(.L) {
+    margin-left: 4px;
+    border-left: solid 1px #1e1f22;
+    border-right: solid 1px #1e1f22;
+}
+
+#params, #props {
+    border: 1px solid #ced0d6;
+    table-layout: fixed;
+    width: 100%;
+    word-wrap: break-word;
+    float: left;
+}
+
+.lvlHdr {cursor: pointer;}
+.lvlHdr:hover {font-weight: bold;}
+.lvlHdr.H:before {content: '+ ';}
+.lvlHdr:not(H):before {content: '- ';}
+
+.L {
+    border: solid 1px #1e1f22;
+    transition: border 0.6s ease-out;
+    overflow-y: hidden;
+}
+.L:not(:has(.L:hover)):hover {border: solid 1px #588cf5;}
+.Lc {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease-in, max-height 0.3s ease-out;
+}
+
+.h {display: none;}
+.n,.r,.b {color: #ced0d6;}
+.s {color: #2b8126;}
+.w {color: rgb(240, 204, 0);}
+.f {color: darkorange;}
+.e {color: #ce2828;}
+.lvlHdr {color: rgb(0, 144, 201);}
+.s,.b,.w,.f,.e,.lvlHdr,.l {font-weight: bold;}
+.n,.r,.b,.s,.w,.f,.e,.i {display: flex;}
+
+.timeSpan {
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-right: 8px;
+    background-color: #292929;
+    border-right: 1px solid #53565c;
+}
+
+h1, h3 {margin-left: 4px;}
+
+a:link {
+    color: rgb(134, 190, 192);
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: pink;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: rgb(0, 174, 255);
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+th {
+    background-color: #b2b4bb;
+    color: #17171a;
+    cursor: default;
+}
+
+td {
+    border: 1px solid #ced0d6;
+    padding: 4px;
+    width: 30%;
+}
+
+button {
+    font-family: monospace, monospace;
+    margin: 4px;
+    background-color: #4f5257;
+    color: #ced0d6;
+}
+
+button:hover {
+    background-color: #292929;
+    color: #ced0d6;
+    cursor: pointer;
+}

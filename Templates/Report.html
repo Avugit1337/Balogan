@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Logia Report</title>
+    <link href="css/Report.css" rel="stylesheet">
+</head>
+
+<body id="reportBody">
+    <div id="reportContainer">
+        <h1 id="reportHdr">Report: N/A</h1>
+        <h3 id="reportDesc">Description: N/A</h3>
+        <div id="tablesContainer" style="border: none; border-bottom: solid 1px #2b2d30;">
+            <button id="toggleProps" style="margin-left: 0px; margin-right: 8px;" onclick="javascript:toggleTbl('props', 'toggleProps', true);">+ Properties</button>
+            <table id="props" style="display: none;">
+                <tr>
+                    <th style="float: left; width: 100%;" colspan="2">Properties<button onclick="javascript:toggleTbl('props', 'toggleProps');">- Hide</button></th>
+                    <th>Value</th>
+                </tr>
+            </table>
+            <button id="toggleParams" style="margin-left: 0px;" onclick="javascript:toggleTbl('params', 'toggleParams', true);">+ Parameters</button>
+            <table id="params" style="display: none;">
+                <tr>
+                    <th style="float: left; width: 100%" colspan="2">Parameters<button onclick="javascript:toggleTbl('params', 'toggleParams');">- Hide</button></th>
+                    <th>Value</th>
+                </tr>
+            </table>
+        </div>
+        <div style="border-bottom: solid 1px #2b2d30;">
+            <span style="white-space: pre-wrap;">Started : </span><span id="started"></span><br>
+            <span style="white-space: pre-wrap;">Ended   : </span><span id="ended"></span>
+        </div>
+        <button id="toggleAll" onclick="javascript:toggleAllLevels(true);">+ Expand All</button>
+        <button id="toggleAll" onclick="javascript:toggleAllLevels();">- Collapse All</button>
+    </div>
+    <script type="text/javascript" src="Report.js"></script>
+    <script type="text/javascript" src="js/ReportController.js"></script>
+    <script type="text/javascript">
+        (function () {
+            populateReport();
+        })();
+    </script>
+</body>
+
+</html>
