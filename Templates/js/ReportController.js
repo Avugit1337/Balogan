@@ -1,9 +1,11 @@
+const parser = new DOMParser();
+
 const TYPE_NA = 0;
 const TYPE_REGULAR = 1;
-const TYPE_SUCCESS = 2;
-const TYPE_BOLD = 3;
-const TYPE_LINK = 4;
-const TYPE_IMG = 5;
+const TYPE_BOLD = 2;
+const TYPE_LINK = 3;
+const TYPE_IMG = 4;
+const TYPE_SUCCESS = 5;
 const TYPE_WARNING = 6;
 const TYPE_FAILURE = 7;
 const TYPE_ERROR = 8;
@@ -14,20 +16,28 @@ const TYPE_HTML = 11;
 const TYPE_CLASSES = {
     [TYPE_NA]: 'n',
     [TYPE_REGULAR]: 'r',
-    [TYPE_SUCCESS]: 's',
     [TYPE_BOLD]: 'b',
     [TYPE_LINK]: 'l',
     [TYPE_IMG]: 'i',
+    [TYPE_SUCCESS]: 's',
     [TYPE_WARNING]: 'w',
     [TYPE_FAILURE]: 'f',
     [TYPE_ERROR]: 'e',
     [TYPE_LEVEL_START]: 'L',
     [TYPE_LEVEL_STOP]: 'S',
-    [TYPE_HTML]: 'h'
+    [TYPE_HTML]: 'H'
+};
+
+const TYPE_COLOR_CLASSES = {
+    [TYPE_SUCCESS]: 'cG',
+    [TYPE_WARNING]: 'cW',
+    [TYPE_FAILURE]: 'cF',
+    [TYPE_ERROR]: 'cR'
 };
 
 const LVL_HDR_CLASS = 'lvlHdr';
 const DATA_HEIGHT_ATTR = 'data-height';
+const SEV_ATTR = 'sev';
 const REPORT_CONTAINER = document.getElementById('reportContainer');
 const DEPTH_STEP = 15;
 var lvlElements;
@@ -135,12 +145,31 @@ function regular(elem, isHtml = false) {
     let regularElemDiv = newReportElemDiv(elem, TYPE_CLASSES[elem.t]);
     regularElemDiv.appendChild(elemContent(elem.d, isHtml));
     appendReportElem(regularElemDiv);
+    const stackLen = lvlStack.length;
+    if (elem.t >= TYPE_SUCCESS && elem.t <= TYPE_ERROR && stackLen > 0) {
+
+        for (let i = stackLen - 1; i >= 0; i--) {
+            let lvlHdrSpan = lvlStack[i].previousSibling;
+            let lvlHdrSev = lvlHdrSpan.getAttribute(SEV_ATTR);
+            let lvlHdrClasses = lvlHdrSpan.classList;
+            if (lvlHdrSev === TYPE_SUCCESS - 1) {
+                lvlHdrClasses.add(TYPE_COLOR_CLASSES[elem.t]);
+                lvlHdrSpan.setAttribute(SEV_ATTR, elem.t);
+            } else if (lvlHdrSev < elem.t) {
+                lvlHdrClasses.remove(TYPE_COLOR_CLASSES[lvlHdrSev]);
+                lvlHdrClasses.add(TYPE_COLOR_CLASSES[elem.t]);
+                lvlHdrSpan.setAttribute(SEV_ATTR, elem.t);
+            }
+        }
+
+    }
 }
 
 function startLevel(elem) {
     let levelDiv = newReportElemDiv(elem, TYPE_CLASSES[elem.t]);
     let lvlHdrSpan = elemContent(elem.d);
     lvlHdrSpan.className = LVL_HDR_CLASS + ' H';
+    lvlHdrSpan.setAttribute(SEV_ATTR, TYPE_SUCCESS - 1);
     levelDiv.appendChild(lvlHdrSpan);
 
     let lvlChildrenDiv = document.createElement('div');

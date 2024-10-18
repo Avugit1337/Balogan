@@ -7,10 +7,10 @@ from Core.Misc import BaloganObj, BaloganType, BaloganStatus
 class ElementType(IntEnum):
     NA = 0
     INFO = 1
-    SUCCESS = 2
-    BOLD = 3
-    LINK = 4
-    IMG = 5
+    BOLD = 2
+    LINK = 3
+    IMG = 4
+    SUCCESS = 5
     WARNING = 6
     FAILURE = 7
     ERROR = 8
@@ -22,10 +22,10 @@ class ElementType(IntEnum):
         return {
             ElementType.NA: 'N/A',
             ElementType.INFO: 'INFO',
-            ElementType.SUCCESS: 'SUCCESS',
             ElementType.BOLD: 'BOLD',
             ElementType.LINK: 'LINK',
             ElementType.IMG: 'IMG',
+            ElementType.SUCCESS: 'SUCCESS',
             ElementType.WARNING: 'WARNING',
             ElementType.FAILURE: 'FAILURE',
             ElementType.ERROR: 'ERROR',
@@ -70,11 +70,12 @@ class Element(BaloganObj):
     def verbose_str(self) -> str:
         time_str = time.strftime('%H:%M:%S', time.localtime(self.epoch))
         return f'[{time_str} | ' + {
+            ElementType.NA: f'N/A    ]: {self.data}',
             ElementType.INFO: f'INFO   ]: {self.data}',
-            ElementType.SUCCESS: f'SUCCESS]: >> {self.data} <<',
             ElementType.BOLD: f'BOLD   ]: >> {self.data} <<',
             ElementType.LINK: f'LINK   ]: {self.data}',
             ElementType.IMG: f'IMG    ]: {self.data}',
+            ElementType.SUCCESS: f'SUCCESS]: >> {self.data} <<',
             ElementType.WARNING: f'WARNING]: >> {self.data} <<',
             ElementType.FAILURE: f'FAILURE]: >> {self.data} <<',
             ElementType.ERROR: f'ERROR  ]: >> {self.data} <<',

@@ -55,6 +55,13 @@
 .s,.b,.w,.f,.e,.lvlHdr,.l {font-weight: bold;}
 .n,.r,.b,.s,.w,.f,.e,.i {display: flex;}
 
+.cG {color: #2b8126;}
+.cW {color: rgb(240, 204, 0);}
+.cF {color: darkorange;}
+.cR {color: #ce2828;}
+
+div.H{display: flex;}
+
 .timeSpan {
     padding-left: 4px;
     padding-right: 4px;
