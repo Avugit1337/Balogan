@@ -11,6 +11,7 @@ Visualize python logs over a simple web page.
 - `err(msg)` - Log an error message (bold red).
 - `img(addr, alt)` - Log an image.
 - `link(addr, replace)` - Log an address as link (href).
+- `html(code)` - Log message as HTML code.
 - `l_start(msg)` - Start a new log level (separated from other levels).
 - `l_stop()` - Mark the end of the current level.
 
@@ -28,21 +29,24 @@ try:
     report.info("Info message")
     report.info("Info message")
     report.warn("WARNING!")
+    report.html("<span style=\"color: pink;\">THIS IS PURE HTML</span>")
 finally:
     report.l_stop()
 ```
 Will result with:
 - Application stdout (set `Report(verbose=False)` to disable):
 ```
-[17:39:48 | LEVEL +]: Message Indentation
+[18:20:34 | LEVEL +]: Message Indentation
 =====================================
-[17:39:48 | INFO   ]: Info message
-[17:39:48 | INFO   ]: Info message
-[17:39:48 | INFO   ]: Info message
-[17:39:48 | WARNING]: >> WARNING! <<
-[17:39:48 | LEVEL -]: ==========================
+[18:20:34 | INFO   ]: Info message
+[18:20:34 | INFO   ]: Info message
+[18:20:34 | INFO   ]: Info message
+[18:20:34 | WARNING]: >> WARNING! <<
+[18:20:34 | HTML   ]: <span style="color: pink;">THIS IS PURE HTML</span>
+[18:20:34 | LEVEL -]: ==========================
 
 Saving report to "Templates/Report.js"
 ```
 - Page:<br>
-![image](https://github.com/user-attachments/assets/5ec067e1-609d-4a84-93c1-51bafdea01f3)
+![image](https://github.com/user-attachments/assets/18ad6031-9067-404f-9536-e7b14b729fe5)
+
