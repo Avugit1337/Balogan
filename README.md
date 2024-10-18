@@ -2,7 +2,7 @@
 Visualize python logs over a simple web page.
 
 ## Usage
-- `log(msg, severity=INFO)``` - Log a message (severities: `NA/INFO/SUCCESS/WARNING/FAILURE/ERROR`).
+- `log(msg, severity=INFO)` - Log a message (severities: `NA/INFO/SUCCESS/WARNING/FAILURE/ERROR`).
 - `info(msg)` - Log an info message (light-gray).
 - `bold(msg)` - Log a bold message (bold light-gray).
 - `success(msg)` - Log a success message (bold green).
