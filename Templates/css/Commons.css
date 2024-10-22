@@ -1,0 +1,51 @@
+button {
+    font-family: monospace, monospace;
+    margin: 4px;
+    background-color: #4f5257;
+    color: #ced0d6;
+}
+
+button:hover {
+    background-color: #292929;
+    color: #ced0d6;
+    cursor: pointer;
+}
+
+h5 {margin: 4px;}
+h1, h3 {margin-left: 4px;}
+
+th {
+    background-color: #b2b4bb;
+    color: #17171a;
+    cursor: default;
+}
+
+td {
+    border: 1px solid #ced0d6;
+    padding: 4px;
+    width: 30%;
+}
+
+a:link {
+    color: rgb(134, 190, 192);
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: pink;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: rgb(0, 174, 255);
+    background-color: transparent;
+    text-decoration: underline;
+}

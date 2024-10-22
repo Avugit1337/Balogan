@@ -1,0 +1,56 @@
+#scenarioBody {
+    color: #ced0d6;
+    background-color: #2b2d30;
+    margin: 8px;
+}
+#reportContainer {margin: 0px;}
+.B {
+    font-weight: bold;
+    color: rgb(0, 144, 201);
+}
+.BL {
+    font-weight: bold;
+    color: rgb(91, 189, 228);
+}
+ul, #scenarioTree {
+    list-style-type: none;
+    display: inline-block;
+}
+.rli {
+    display: table;
+    padding: 4px;
+    border: solid 1px #1e1f22;
+    transition: border 0.7s;
+}
+.rli:hover {border: solid 1px #588cf5;}
+
+#scenarioTree {padding: 0px;}
+
+#treeContainer {
+    font-family: monospace, monospace;
+    display: inline-block;
+    background-color: #1e1f22;
+    border: 1px solid black;
+    border-style: outset;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.caret {
+    cursor: pointer;
+    user-select: none;
+}
+
+.caret::before {
+    content: "\25B6";
+    color: black;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.caret-down::before {
+    transform: rotate(90deg);
+}
+
+.nested {display: none;}
+.active {display: block;}

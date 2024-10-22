@@ -13,12 +13,7 @@
     margin: 12px;
 }
 
-#reportContainer div.L {margin: 4px;}
-#reportContainer>div:not(.L) {
-    margin-left: 4px;
-    border-left: solid 1px #1e1f22;
-    border-right: solid 1px #1e1f22;
-}
+#reportContainer div {margin-left: 4px}
 
 #params, #props {
     border: 1px solid #ced0d6;
@@ -70,58 +65,7 @@ div.H{display: flex;}
     border-right: 1px solid #53565c;
 }
 
-h1, h3 {margin-left: 4px;}
-
-a:link {
-    color: rgb(134, 190, 192);
-    background-color: transparent;
-    text-decoration: none;
-}
-
-a:visited {
-    color: pink;
-    background-color: transparent;
-    text-decoration: none;
-}
-
-a:hover {
-    color: red;
-    background-color: transparent;
-    text-decoration: underline;
-}
-
-a:active {
-    color: rgb(0, 174, 255);
-    background-color: transparent;
-    text-decoration: underline;
-}
-
-img {
+#reportContainer img {
     width: 100px;
     height: 100px;
-}
-
-th {
-    background-color: #b2b4bb;
-    color: #17171a;
-    cursor: default;
-}
-
-td {
-    border: 1px solid #ced0d6;
-    padding: 4px;
-    width: 30%;
-}
-
-button {
-    font-family: monospace, monospace;
-    margin: 4px;
-    background-color: #4f5257;
-    color: #ced0d6;
-}
-
-button:hover {
-    background-color: #292929;
-    color: #ced0d6;
-    cursor: pointer;
 }

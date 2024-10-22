@@ -1,5 +1,3 @@
-const parser = new DOMParser();
-
 const TYPE_NA = 0;
 const TYPE_REGULAR = 1;
 const TYPE_BOLD = 2;
@@ -38,50 +36,17 @@ const TYPE_COLOR_CLASSES = {
 const LVL_HDR_CLASS = 'lvlHdr';
 const DATA_HEIGHT_ATTR = 'data-height';
 const SEV_ATTR = 'sev';
-const REPORT_CONTAINER = document.getElementById('reportContainer');
 const DEPTH_STEP = 15;
+var reportElements;
 var lvlElements;
 
 var lvlStack = [];
 var depth = 0;
 
-function tblTd(txt) {
-    let td = document.createElement('td');
-    td.innerText = txt;
-    return td;
-}
-
-function tblTr(left, right) {
-    let tr = document.createElement('tr');
-    tr.append(tblTd(left));
-    tr.append(tblTd(right));
-    return tr;
-}
-
-function setTbl(tbl, dict) {
-    let tb = tbl.getElementsByTagName('tbody')[0];
-    for (key in dict)
-        if (dict.hasOwnProperty(key))
-            tb.appendChild(tblTr(key, dict[key]));
-}
-
 function appendReportElem(element) {
     (lvlStack.length === 0 ?
-        REPORT_CONTAINER
+        reportElements
         : lvlStack[lvlStack.length - 1]).appendChild(element);
-}
-
-function padTwo(num) {
-    return (num < 10 ? '0' : '') + num;
-}
-
-function timeFromTs(epochSeconds) {
-    const d = new Date(epochSeconds * 1000);
-    return padTwo(d.getHours()) + ":" + padTwo(d.getMinutes()) + ":" + padTwo(d.getSeconds());
-}
-
-function dateFromTs(epochSeconds) {
-    return new Date(epochSeconds * 1000).toDateString();
 }
 
 function timestampSpan(epoch) {
@@ -145,23 +110,23 @@ function regular(elem, isHtml = false) {
     let regularElemDiv = newReportElemDiv(elem, TYPE_CLASSES[elem.t]);
     regularElemDiv.appendChild(elemContent(elem.d, isHtml));
     appendReportElem(regularElemDiv);
+
     const stackLen = lvlStack.length;
     if (elem.t >= TYPE_SUCCESS && elem.t <= TYPE_ERROR && stackLen > 0) {
-
         for (let i = stackLen - 1; i >= 0; i--) {
             let lvlHdrSpan = lvlStack[i].previousSibling;
             let lvlHdrSev = lvlHdrSpan.getAttribute(SEV_ATTR);
             let lvlHdrClasses = lvlHdrSpan.classList;
-            if (lvlHdrSev === TYPE_SUCCESS - 1) {
+            if (lvlHdrSev < TYPE_SUCCESS) {
                 lvlHdrClasses.add(TYPE_COLOR_CLASSES[elem.t]);
                 lvlHdrSpan.setAttribute(SEV_ATTR, elem.t);
             } else if (lvlHdrSev < elem.t) {
                 lvlHdrClasses.remove(TYPE_COLOR_CLASSES[lvlHdrSev]);
                 lvlHdrClasses.add(TYPE_COLOR_CLASSES[elem.t]);
                 lvlHdrSpan.setAttribute(SEV_ATTR, elem.t);
-            }
+            } else
+                break;
         }
-
     }
 }
 
@@ -192,6 +157,8 @@ function stopLevel() {
 
 function setReportElems(reportElems) {
     let elemsMnt = reportElems.length;
+    if (elemsMnt === 0)
+        return;
     for (let i = 0; i < elemsMnt; i++) {
         switch (reportElems[i].t) {
             case TYPE_REGULAR: regular(reportElems[i]); break;
@@ -232,18 +199,6 @@ function toggleElem(el, show = false) {
     }
 }
 
-function toggleTbl(tblId, btnId, show = false) {
-    const tes = document.getElementById(tblId).style;
-    const ies = document.getElementById(btnId).style;
-    if (show) {
-        tes.removeProperty('display');
-        ies.display = 'none';
-    } else {
-        tes.display = 'none';
-        ies.removeProperty('display');
-    }
-}
-
 function toggleAllLevels(show = false) {
     for (let i = 0; i < lvlElements.length; i++) {
         let levelChildren = lvlElements[i].childNodes;
@@ -269,13 +224,71 @@ function setLevelsOnClick() {
     }
 }
 
-function populateReport() {
+function addReportHdr(container, el, id, lbl) {
+    const reportHdr = document.createElement(el);
+    reportHdr.id = id;
+    reportHdr.innerText = lbl;
+    container.appendChild(reportHdr);
+}
+
+function startEndPart(container, txt, id, timeStr) {
+    const endedSpan = document.createElement('span');
+    endedSpan.style.whiteSpace = 'pre-wrap';
+    endedSpan.innerText = txt;
+    const endedInnerSpan = document.createElement('span');
+    endedInnerSpan.id = id;
+    endedInnerSpan.innerText = timeStr;
+    container.appendChild(endedSpan);
+    container.appendChild(endedInnerSpan);
+}
+
+function toggleAllBtn(container, txt, onclick) {
+    const toggleAll = document.createElement('button');
+    toggleAll.id = 'toggleAll';
+    toggleAll.onclick = onclick;
+    toggleAll.innerText = txt;
+    container.appendChild(toggleAll);
+}
+
+function populateReport(report) {
+    const reportBody = document.getElementById('reportBody');
+    reportBody.replaceChildren();
+
+    const reportContainer = document.createElement('div');
+    reportContainer.id = 'reportContainer';
+    reportBody.appendChild(reportContainer);
+    
+    // Name / Description
+    addReportHdr(reportContainer, 'h1', 'reportHdr', 'Report: ' + report.n);
+    addReportHdr(reportContainer, 'h3', 'reportDesc', 'Description: ' + report.D);
+
+    // Params / Props
+    const tablesContainer = document.createElement('div');
+    tablesContainer.id = 'tablesContainer';
+    toggleableTbl(tablesContainer, 'props', 'toggleProps', 'Properties');
+    toggleableTbl(tablesContainer, 'params', 'toggleParams', 'Parameters');
+    reportContainer.appendChild(tablesContainer);
     setTbl(document.getElementById('props'), report.p);
     setTbl(document.getElementById('params'), report.P);
-    document.getElementById('reportHdr').innerText = "Report: " + report.n;
-    document.getElementById('reportDesc').innerText = "Description: " + report.D;
-    document.getElementById('started').innerText = new Date(report.S * 1000).toLocaleString();
-    document.getElementById('ended').innerText = new Date(report.E[report.E.length - 1].e * 1000).toLocaleString();
+    
+    // Started / Ended
+    const startedEndeddiv = document.createElement('div');
+    startedEndeddiv.style.borderBottom = 'solid 1px #2b2d30';
+    startEndPart(startedEndeddiv, 'Started : ', 'started', new Date(report.S * 1000).toLocaleString());
+    startedEndeddiv.appendChild(document.createElement('br'));
+    startEndPart(startedEndeddiv, 'Ended   : ', 'ended', new Date(report.E[report.E.length - 1].e * 1000).toLocaleString());
+    reportContainer.appendChild(startedEndeddiv);
+
+    // Toggle All
+    toggleAllBtn(reportContainer, '+ Expand All', function() {toggleAllLevels(true);});
+    toggleAllBtn(reportContainer, '- Collapse All', function() {toggleAllLevels();});
+
+    // Actual Report
+    reportElements = document.createElement('div');
+    reportElements.id = 'reportElements';
+    reportElements.style.marginLeft = '0px';
+    reportContainer.appendChild(reportElements);
+    
     setReportElems(report.E);
     setLevelsOnClick();
 }
